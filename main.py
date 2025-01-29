@@ -19,7 +19,7 @@ origins = ["https://dddankner.github.io/render_front/"]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,  # Allow specific origins
+    allow_origins=["*"],  # Allow specific origins
     allow_credentials=True,  # Allow cookies to be included in requests
     allow_methods=["*"],  # Allow all HTTP methods (GET, POST, PUT, DELETE, etc.)
     allow_headers=["*"],  # Allow all headers
