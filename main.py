@@ -75,12 +75,13 @@ async def create_user(request: Request, db: Session = Depends(get_db)):
 @app.get("/users/")
 def read_users(db: Session = Depends(get_db)):
     users = db.query(User).filter(User.active == True).all()
-    return [{"id": user.id, "name": user.name, "age": user.age} for user in users]
+    return [{"id": user.id, "name": user.name, "age": user.age, "active" : user.active} for user in users]
 
 
 # Update a User
 @app.put("/users/")
-async def update_user(user: dict, db: Session = Depends(get_db)):
+async def update_user(request: Request, db: Session = Depends(get_db)):
+    user = await request.json()
     user_id = user.get("id")
     name = user.get("name")
     age = user.get("age")
@@ -98,7 +99,8 @@ async def update_user(user: dict, db: Session = Depends(get_db)):
 
 # Delete a User
 @app.delete("/users/")
-async def delete_user(user: dict, db: Session = Depends(get_db)):
+async def delete_user(request: Request, db: Session = Depends(get_db)):
+    user = await request.json()
     user_id = user.get("id")
 
     db_user = db.query(User).filter(User.id == user_id).first()
