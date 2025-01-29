@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException, Depends
+from fastapi import FastAPI, HTTPException, Depends, Request
 from sqlalchemy import Column, Integer, String, Boolean, create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, Session
@@ -12,7 +12,7 @@ engine = create_engine(SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 
-origins = ["https://dddankner.github.io/*"]  
+origins = ["https://dddankner.github.io/render_front/"]  
 
 # Recommended: Specify allowed origins
 # origins = ["http://localhost:3000", "https://yourfrontend.com"]
@@ -56,7 +56,8 @@ def read_root():
 # CRUD Operations
 # Create a User
 @app.post("/users/")
-async def create_user(user: dict, db: Session = Depends(get_db)):
+async def create_user(request: Request, db: Session = Depends(get_db)):
+    user = await request.json()
     name = user.get("name")
     age = user.get("age")
 
