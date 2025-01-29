@@ -12,7 +12,7 @@ engine = create_engine(SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 
-origins = ["https://dddankner.github.io/render_front/"]  
+origins = ["https://dddankner.github.io/*"]  
 
 # Recommended: Specify allowed origins
 # origins = ["http://localhost:3000", "https://yourfrontend.com"]
